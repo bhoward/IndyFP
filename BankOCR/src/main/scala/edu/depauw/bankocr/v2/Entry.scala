@@ -19,7 +19,7 @@ class Entry(cells: List[Cell]) {
     for {
       i <- 0 until Entry.CELLS_PER_ENTRY
       seg <- Segment.values
-      val alt = switch(i, seg)
+      alt = switch(i, seg)
       digits <- alt.toDigits
       check <- alt.checksum
       if check == 0
