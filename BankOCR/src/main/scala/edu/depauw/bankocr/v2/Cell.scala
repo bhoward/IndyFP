@@ -3,7 +3,7 @@ package edu.depauw.bankocr.v2
 class Cell(val segments: Map[Segment, Boolean]) {
   def switch(seg: Segment): Cell = new Cell(segments + (seg -> !segments(seg)))
 
-  def matches(cell: Cell): Boolean = segments == cell.segments
+  def matches(other: Cell): Boolean = segments == other.segments
   
   def digit: Option[Char] = {
     val found = for ((d, cell) <- Cell.digits if matches(cell)) yield d
