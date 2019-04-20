@@ -5,3 +5,5 @@ target/
 .metadata
 .settings/
 .cache-main
+.metals/
+.bloop/
