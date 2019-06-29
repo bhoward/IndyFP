@@ -1,0 +1,4 @@
+Banker's Deque, Real-Time Deque
+Binary Random-Access List (and Skew version?)
+Trie?
+Review papers in ReadMe
