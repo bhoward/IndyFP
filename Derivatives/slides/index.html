@@ -25,16 +25,22 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
-					<h1>Derivative Works in Computer Science</h1>
-					<h2>Brian Howard, DePauw University</h2>
+				<section data-markdown>
+					<textarea data-template>
+						# Derivative Works in Computer Science
+						## Brian Howard, DePauw University
+
+						* $e^i\pi + 1 = 0$
+					</textarea>
 				</section>
-				<section>
+				<section data-markdown>
+					<textarea data-template>
 					# Overview
 					* Numeric and Symbolic Differentiation
 					* Dual Numbers and Backpropagation
 					* Lexing and Parsing
 					* Types and Zippers
+					</textarea>
 				</section>
 			</div>
 		</div>
@@ -50,7 +56,8 @@
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true }
+					{ src: 'plugin/highlight/highlight.js', async: true },
+					{ src: 'plugin/math/math.js', async: true }
 				]
 			});
 		</script>
