@@ -29,8 +29,6 @@
 					<textarea data-template>
 						# Derivative Works in Computer Science
 						## Brian Howard, DePauw University
-
-						* $e^{i\pi} + 1 = 0$
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -40,6 +38,38 @@
 					* Dual Numbers and Backpropagation
 					* Lexing and Parsing
 					* Types and Zippers
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Numeric Differentiation
+					`$$
+						Df(a) =
+						\lim_{\epsilon\rightarrow 0}\frac{f(a + \epsilon) - f(a)}{\epsilon}
+					$$`
+					If `$f$` is a function of `$n$` variables `$x_1,\ldots,x_n$`, then
+					`$$
+						\begin{array}{l}
+						D_i\, f(a_1,\ldots,a_n) =\\
+						\qquad\lim_{\epsilon\rightarrow 0}\frac{f(a_1,\ldots,a_i+\epsilon,\ldots,a_n) - f(a_1,\ldots,a_i,\ldots,a_n)}{\epsilon}
+						\end{array}
+					$$`
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Symbolic Differentiation
+					Consider expressions over free variables `$x_1,\ldots,x_n$`
+					`$$
+						\begin{array}{l|l}
+						D_i e = 0,\quad\textit{if}\ x_i\not\in e
+						 & D_i x_i = 1\\
+						D_i(a + b) = D_i a + D_i b
+						 & D_i(ab) = (D_i a)b + a(D_i b)\\
+						D_i(a^n) = n a^{n-1} D_i a
+						 & \textit{chain rule}
+						\end{array}
+					$$`
 					</textarea>
 				</section>
 			</div>
