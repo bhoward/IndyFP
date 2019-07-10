@@ -62,14 +62,26 @@
 					Consider expressions over free variables `$x_1,\ldots,x_n$`
 					`$$
 						\begin{array}{l|l}
-						D_i e = 0,\quad\textit{if}\ x_i\not\in e
+						D_i a = 0,\quad\textit{if}\ x_i\not\in a
 						 & D_i x_i = 1\\
 						D_i(a + b) = D_i a + D_i b
-						 & D_i(ab) = (D_i a)b + a(D_i b)\\
-						D_i(a^n) = n a^{n-1} D_i a
-						 & \textit{chain rule}
+						 & D_i(a\cdot b) = D_i a\cdot b + a\cdot D_i b\\
+						D_i(a^n) = n\cdot a^{n-1}\cdot D_i a
+						 & D_i(f(a, b)) = D_a\, f\cdot D_i a\\
+						D_i(e^a) = e^a\cdot D_i a
+						 & \qquad {} + D_b\, f\cdot D_i b
 						\end{array}
 					$$`
+					"Structural Induction"
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Machine Learning: Gradient Descent
+
+					* Approximate `$f:A\rightarrow B$` by finding parameter `$w$` for `$g:W\times A\rightarrow B$`
+					* Train on examples `$(a, f(a))$`; define loss function `$L(w) = ||f(a) - g(w, a)||$`
+					* Use `$\nabla L$` to improve `$w_0$` to `$w_0-r\cdot\nabla L(w_0)$`. Repeat.
 					</textarea>
 				</section>
 			</div>
