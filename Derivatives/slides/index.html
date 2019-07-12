@@ -72,6 +72,7 @@
 						 & \qquad {} + D_b\, f\cdot D_i b
 						\end{array}
 					$$`
+
 					"Structural Induction"
 					</textarea>
 				</section>
@@ -82,6 +83,53 @@
 					* Approximate `$f:A\rightarrow B$` by finding parameter `$w$` for `$g:W\times A\rightarrow B$`
 					* Train on examples `$(a, f(a))$`; define loss function `$L(w) = ||f(a) - g(w, a)||$`
 					* Use `$\nabla L$` to improve `$w_0$` to `$w_0-r\cdot\nabla L(w_0)$`. Repeat.
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Approaches to Gradient Computation
+
+					* Manual differentiation
+					* Numerical differentiation
+					* Symbolic differentiation
+					* Automatic differentiation
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Manual or Symbolic Differentiation
+
+					Consider `$f(x) = m_4$`, where `$m_1=x$` and `$m_{n+1}=4m_n(1 - m_n)$`
+					("truncated logistic map" example from Baydin, *et al.*):
+
+					`$f(x)=64x(1-x)(1-2x)^2(1-8x+8x^2)^2$`, so
+					`$f'(x)=128x(1-x)(1-2x)^2(1-8x+8x^2)(-8+16x) + \ldots$`
+
+					Needs a closed form, and leads to "Expression Swell"
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Numerical Differentiation
+
+					```haskell
+f :: Double -> Double
+f x = m 4 where
+  m 1 = x
+  m n = let mn1 = m (n - 1)
+        in 4 * mn1 * (1 - mn1)
+
+f' :: Double -> Double
+f' x = let eps = 0.000001
+	   in (f (x + eps) - f x) / eps
+
+> f' 0.25
+7.999951999848598
+					```
+
+					"Cardinal Sins of Numerical Analysis":
+					* adding a small number to a big number
+					* subtracting nearly equal numbers
 					</textarea>
 				</section>
 			</div>
