@@ -10,6 +10,12 @@
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
 
+		<style>
+			.reveal h2 {
+				text-transform: none;
+			}
+		</style>
+
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
 
@@ -33,7 +39,7 @@
 				</section>
 				<section data-markdown>
 					<textarea data-template>
-					# Overview
+					## Overview
 					* Numeric and Symbolic Differentiation
 					* Dual Numbers and Backpropagation
 					* Lexing and Parsing
@@ -116,8 +122,7 @@
 f :: Double -> Double
 f x = m 4 where
   m 1 = x
-  m n = let mn1 = m (n - 1)
-        in 4 * mn1 * (1 - mn1)
+  m n = let mn1 = m (n - 1) in 4 * mn1 * (1 - mn1)
 
 f' :: Double -> Double
 f' x = let eps = 0.000001
@@ -139,6 +144,8 @@ f' x = let eps = 0.000001
 					`$x = a + b\varepsilon$`, where `$\varepsilon > 0$` but `$\varepsilon^2 = 0$`
 
 					(Compare to `$x = a + bi$`, where `$i^2 = -1$`)
+
+					Calculate value and derivative simultaneously
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -164,8 +171,7 @@ f' x = let eps = 0.000001
 data Dual = Dual Double Double deriving (Read, Show, Eq)
 
 instance Num Dual where
-  (+) (Dual a1 b1) (Dual a2 b2)
-    = Dual (a1 + a2) (b1 + b2)
+  (+) (Dual a1 b1) (Dual a2 b2) = Dual (a1 + a2) (b1 + b2)
   (*) (Dual a1 b1) (Dual a2 b2)
     = Dual (a1 * a2) (a2 * b1 + a1 * b2)
   ...
@@ -173,12 +179,26 @@ instance Num Dual where
 f :: Dual -> Dual
 f x = m 4 where
   m 1 = x
-  m n = let mn1 = m (n - 1)
-		in 4 * mn1 * (1 - mn1)
+  m n = let mn1 = m (n - 1) in 4 * mn1 * (1 - mn1)
 
 -- >>> f (Dual 0.25 1)
 -- Dual 0.75 8.0
 					```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Forward vs Backward AD
+
+					* Dual numbers give forward AD
+					* If `$f:\Bbb{R}^n\rightarrow\Bbb{R}$`, then forward AD is `$O(n^2)$`
+					* Backward AD uses X to make this `$O(n)$`, where X is:
+					   - traces
+					   - continuations
+					   - sharing
+					   - matrix transpose
+					   - category theory
+					   - ...
 					</textarea>
 				</section>
 			</div>
