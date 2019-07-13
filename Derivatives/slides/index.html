@@ -132,6 +132,55 @@ f' x = let eps = 0.000001
 					* subtracting nearly equal numbers
 					</textarea>
 				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Automatic Differentiation with Dual Numbers
+
+					`$x = a + b\varepsilon$`, where `$\varepsilon > 0$` but `$\varepsilon^2 = 0$`
+
+					(Compare to `$x = a + bi$`, where `$i^2 = -1$`)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Dual Number Examples
+					`$$
+						\begin{array}{l}
+						(a_1+b_1\varepsilon) + (a_2+b_2\varepsilon) = (a_1+a_2)+(b_1+b_2)\varepsilon\\
+						(a_1+b_1\varepsilon) \cdot (a_2+b_2\varepsilon) = 
+							a_1\cdot a_2+(a_1\cdot b_2+a_2\cdot b_1)\varepsilon\\
+						(a+b\varepsilon)^n = a^n + (n\cdot a^{n-1}\cdot b)\varepsilon\\
+						e^{a+b\varepsilon} = e^a + (e^a\cdot b)\varepsilon\\
+						f(a+b\varepsilon) = f(a) + (f'(a)\cdot b)\varepsilon
+						\end{array}
+					$$`
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Logistic Map Revisited
+
+					```haskell
+data Dual = Dual Double Double deriving (Read, Show, Eq)
+
+instance Num Dual where
+  (+) (Dual a1 b1) (Dual a2 b2)
+    = Dual (a1 + a2) (b1 + b2)
+  (*) (Dual a1 b1) (Dual a2 b2)
+    = Dual (a1 * a2) (a2 * b1 + a1 * b2)
+  ...
+
+f :: Dual -> Dual
+f x = m 4 where
+  m 1 = x
+  m n = let mn1 = m (n - 1)
+		in 4 * mn1 * (1 - mn1)
+
+-- >>> f (Dual 0.25 1)
+-- Dual 0.75 8.0
+					```
+					</textarea>
+				</section>
 			</div>
 		</div>
 

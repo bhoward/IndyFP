@@ -1,2 +1,4 @@
 .metals
 .bloop
+*.hi
+*.o
