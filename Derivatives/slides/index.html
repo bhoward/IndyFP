@@ -57,7 +57,7 @@
 					`$$
 						\begin{array}{l}
 						D_i\, f(a_1,\ldots,a_n) =\\
-						\qquad\lim_{\epsilon\rightarrow 0}\frac{f(a_1,\ldots,a_i+\epsilon,\ldots,a_n) - f(a_1,\ldots,a_i,\ldots,a_n)}{\epsilon}
+						\displaystyle\qquad\lim_{\epsilon\rightarrow 0}\frac{f(a_1,\ldots,a_i+\epsilon,\ldots,a_n) - f(a_1,\ldots,a_i,\ldots,a_n)}{\epsilon}
 						\end{array}
 					$$`
 					</textarea>
@@ -87,7 +87,7 @@
 					## Machine Learning: Gradient Descent
 
 					* Approximate `$f:A\rightarrow B$` by finding parameter `$w$` for `$g:W\times A\rightarrow B$`
-					* Train on examples `$(a, f(a))$`; define loss function `$L(w) = ||f(a) - g(w, a)||$`
+					* Train on examples `$(a, f(a))$`; define loss function `$L(w) = ||\,f(a) - g(w, a)||$`
 					* Use `$\nabla L$` to improve `$w_0$` to `$w_0-r\cdot\nabla L(w_0)$`. Repeat.
 					</textarea>
 				</section>
@@ -126,7 +126,7 @@ f x = m 4 where
 
 f' :: Double -> Double
 f' x = let eps = 0.000001
-	   in (f (x + eps) - f x) / eps
+	     in (f (x + eps) - f x) / eps
 
 > f' 0.25
 7.999951999848598
@@ -181,8 +181,8 @@ f x = m 4 where
   m 1 = x
   m n = let mn1 = m (n - 1) in 4 * mn1 * (1 - mn1)
 
--- >>> f (Dual 0.25 1)
--- Dual 0.75 8.0
+> f (Dual 0.25 1)
+Dual 0.75 8.0
 					```
 					</textarea>
 				</section>
