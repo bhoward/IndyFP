@@ -95,4 +95,32 @@ object CFG {
       else
         left.derive(c) ~ right
   }
+  
+  def main(args: Array[String]): Unit = {
+    val letter = lit('a') | 'b' | 'c'
+    val digit = lit('0') | '1' | '2'
+    lazy val idrest: Parser = epsilon | (letter | digit) ~ idrest
+    val id = letter ~ idrest
+    lazy val numrest: Parser = epsilon | digit ~ numrest
+    val num = lit('0') | (lit('1') | lit('2')) ~ numrest
+    
+    test("a", id, true)
+    test("a1", id, true)
+    test("abc", id, true)
+    test("1a", id, false)
+    test("12", num, true)
+    test("210", num, true)
+    test("0", num, true)
+    test("a1", num, false)
+    test("01", num, false)
+  }
+  
+  def test(s: String, p: Parser, expect: Boolean): Unit = {
+    val result = p(s.toList)
+    if (result == expect) {
+      println(s"OK: $s produces $result") 
+    } else {
+      println(s"FAIL: $s produces $result")
+    }
+  }
 }
