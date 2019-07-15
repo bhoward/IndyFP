@@ -80,12 +80,12 @@ abstract class Parser[T,A] {
     }
 
   def parseFull (input : Stream[T]) : Stream[A] = 
-    if (input.isEmpty) Stream.fromIterator(parseNull.elements)
+    if (input.isEmpty) parseNull.toStream
     else /*otherwise*/ this.derive(input.head).parseFull(input.tail)
 
   def parse (input : Stream[T]) : Stream[(A,Stream[T])] = 
     if (input.isEmpty) 
-      Stream.fromIterator((parseNull map (a => (a,Stream.empty))).elements)
+      (parseNull map (a => (a,Stream.empty))).toStream
     else 
       combineEven(this.derive(input.head).parse(input.tail),
                   for (a <- this.parseFull(Stream.empty)) yield (a,input))
@@ -344,7 +344,7 @@ object TestParser3 {
 
   def main (args : Array[String]) {
 
-    val in = Stream.fromIterator("xxxxx".elements)
+    val in = "xxxxx".toStream
 
     val parses = XL.parse(in)
 
@@ -370,7 +370,7 @@ object TestParser3 {
     println(parses4.head)
 
 
-    val in2 = Stream.fromIterator("(xxxx)".elements)
+    val in2 = "(xxxx)".toStream
 
     val parses5 = PAR_LEXL.parseFull(in2)
 
@@ -379,14 +379,14 @@ object TestParser3 {
 
 
 
-    val xin = Stream.fromIterator("xsxsxsxsx".elements)
+    val xin = "xsxsxsxsx".toStream
     
     var xparse1 = EXP.parseFull(xin)
     println("xparse1: " + xparse1)
 
 
 
-    val sin = Stream.fromIterator("(sss(sss(s)(s)sss)ss(s))".elements)
+    val sin = "(sss(sss(s)(s)sss)ss(s))".toStream
 
     var sparse1 = SX.parseFull(sin)
     println(sparse1)
@@ -411,7 +411,7 @@ object TestParser3 {
 
       // println("sexpNs: " + sexpNs)
       
-      var input : Stream[Char] = Stream.fromIterator(sexpNs.elements)
+      var input : Stream[Char] = sexpNs.toStream
 
       // println(input)
       
