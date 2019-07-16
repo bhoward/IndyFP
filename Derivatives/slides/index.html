@@ -299,11 +299,69 @@ Dual 0.75 8.0
 				<section data-markdown>
 					<textarea data-template>
 					## Types and Zippers
+
+					* Polynomial Types: 0, 1, `$1+T$`, `$T+T^3$`, ...
+						- `$+$` is disjoint union/variant
+						- `$\times$` is cartesian product/tuple
+
+					* Regular Types: defined by mutually-recursive equations of polynomials
 					</textarea>
 				</section>
 				<section data-markdown>
 					<textarea data-template>
-					##
+					## Examples
+
+					`$$\begin{array}{rcll}
+					\textit{Bool} & = & 1 + 1 & \textit{false, true}\\
+					\textit{Nat} & = & 1 + Nat & \textit{zero, succ(n)}\\
+					\textit{List}[A] & = & 1 + A\times\textit{List}[A] & \textit{nil, cons(a, l)}\\
+					\textit{BTree}[A] & = & 1 + A\times\textit{BTree}[A]^2 & \textit{empty, node(a, l, r)}\\
+					\textit{Tree}[A] & = & A + \textit{Forest}[A] & \textit{leaf(a), fnode(f)}\\
+					\textit{Forest}[A] & = & \textit{List}[\textit{Tree}[A]] &
+					\end{array}$$`
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Zipper
+
+					Data structure keeping track of a position in another structure: "one-hole context",
+					just needing a value to put in the hole
+
+					Huet, 1997: informally described zippers for trees
+
+					McBride, 2001: "The Derivative of a Regular Type is its Type of One-Hole Contexts"
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Type Derivatives
+
+					Same as the usual laws, with implicit differentiation for the recursion
+
+					`$$\begin{array}{rcl}
+					\textit{List}[A] & = & 1 + A\times\textit{List}[A]\\
+					D_A \textit{List}[A] & = & \textit{List}[A] + A\times(D_A \textit{List}[A])
+					\end{array}$$`
+
+					Solve `$T = B + A\times T$` to get `$T = B\times\textit{List}[A]$`, so a list
+					zipper is the tail of the list (`$B=\textit{List}[A]$`) plus a list of A values
+					for the prefix from the head to the hole:
+					`$[a_0, a_1, ..., a_n, \Box, b_0, b_1, ...]$`
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Binary Trees
+
+					`$$\begin{array}{rcl}
+					\textit{BTree} & = & 1 + A\times\textit{BTree}^2\\
+					D_A \textit{BTree}
+					  & = & \textit{BTree}^2 + 2\times A\times\textit{BTree}\times(D_A \textit{BTree})\\
+					  & = & \textit{BTree}^2 \times \textit{List}[2\times A\times\textit{BTree}]
+					\end{array}$$`
+					At the current node, have two subtrees and a hole of type A. The path from the root is a list
+					of tuples with a left/right flag (2), an A, and a subtree for the path not taken.
 					</textarea>
 				</section>
 			</div>
