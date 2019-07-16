@@ -62,4 +62,31 @@ object RegExp {
 
     def derive(c: Char) = body.derive(c) ~ this
   }
+  
+  def main(args: Array[String]): Unit = {
+    val letter = lit('a') | 'b' | 'c'
+    val digit = lit('0') | '1' | '2'
+    val id = letter ~ (letter | digit).*
+    val num = '0' | (lit('1') | '2') ~ digit.*
+    
+    test("a", id, true)
+    test("a1", id, true)
+    test("abc", id, true)
+    test("1a", id, false)
+    test("12", num, true)
+    test("210", num, true)
+    test("0", num, true)
+    test("a1", num, false)
+    test("01", num, false)
+  }
+  
+  def test(s: String, p: Parser, expect: Boolean): Unit = {
+    val result = p(s.toList)
+    if (result == expect) {
+      println(s"OK: $s produces $result") 
+    } else {
+      println(s"FAIL: $s produces $result")
+    }
+  }
+
 }

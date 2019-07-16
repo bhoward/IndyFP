@@ -47,7 +47,7 @@ object CFG {
 
   // A non-trivial productive recursion has to include a Union, so
   // we will compute fixed points and memoize here
-  class Union(_left: => Parser, _right: Parser) extends Parser {
+  class Union(_left: => Parser, _right: => Parser) extends Parser {
     lazy val left = _left
     lazy val right = _right
 
@@ -102,7 +102,7 @@ object CFG {
     lazy val idrest: Parser = epsilon | (letter | digit) ~ idrest
     val id = letter ~ idrest
     lazy val numrest: Parser = epsilon | digit ~ numrest
-    val num = lit('0') | (lit('1') | lit('2')) ~ numrest
+    val num = '0' | (lit('1') | '2') ~ numrest
     
     test("a", id, true)
     test("a1", id, true)
@@ -113,6 +113,14 @@ object CFG {
     test("0", num, true)
     test("a1", num, false)
     test("01", num, false)
+    
+    lazy val expr: Parser = term | expr ~ '+' ~ term
+    lazy val term: Parser = factor | term ~ '*' ~ factor
+    lazy val factor: Parser = id | num | '(' ~ expr ~ ')'
+    
+    test("a+b*c1+22", expr, true)
+    test("a*(aa+aaa)+1*(b1+c1+(1000+a)*a001)", expr, true)
+    test("a*(b+(c*2)", expr, false)
   }
   
   def test(s: String, p: Parser, expect: Boolean): Unit = {
