@@ -214,59 +214,99 @@ Dual 0.75 8.0
 					</textarea>
 				</section>
 				<section data-markdown>
-						<textarea data-template>
-						## Brzozowski Derivatives (1964)
-	
-						Direct construction of finite state machine from regular expression:
-						* States are (equivalence classes of) regular expressions
-						* Transitions `$e \stackrel{a}{\longrightarrow} D_a e$`
-						* Derivative `$D_a e$` is "suffixes of strings of `$e$` that start with `$a$`"
-						* State is accepting if empty string in `$e$`
-						</textarea>
-					</section>
-					<section data-markdown>
-						<textarea data-template>
-						## Symbolic Brzozowski Differentiation
+					<textarea data-template>
+					## Brzozowski Derivatives (1964)
 
-						`$$\begin{array}{l|l}
-						D_a \emptyset = \emptyset &
-						D_a \epsilon = \emptyset\\
-						D_a a = \epsilon &
-						D_a b = \emptyset\\
-						D_a (e_1 + e_2) = D_a e_1 + D_a e_2 &
-						D_a (e^*) = (D_a e)e^*\\
-						D_a (e_1 e_2) = (D_a e_1)e_2 + \delta(e_1)(D_a e_2) & \\ \hline
-						\delta(\emptyset) = \emptyset & \delta(\epsilon) = \epsilon\\
-						\delta(a) = \emptyset & \delta(e_1 e_2) = \delta(e_1)\delta(e_2)\\
-						\delta(e_1 + e_2) = \delta(e_1) + \delta(e_2) & \delta(e^*) = \epsilon
-						\end{array}$$`
-						</textarea>
-					</section>
-					<section data-markdown>
-						<textarea data-template>
-						## Example: `$e_0 = a(a+b)^*$`
+					Direct construction of finite state machine from regular expression:
+					* States are (equivalence classes of) regular expressions
+					* Transitions `$e \stackrel{a}{\longrightarrow} D_a e$`
+					* Derivative `$D_a e$` is "suffixes of strings of `$e$` that start with `$a$`"
+					* State is accepting if empty string in `$e$`
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Symbolic Brzozowski Differentiation
+
+					`$$\begin{array}{l|l}
+					D_a \emptyset = \emptyset &
+					D_a \epsilon = \emptyset\\
+					D_a a = \epsilon &
+					D_a b = \emptyset\\
+					D_a (e_1 + e_2) = D_a e_1 + D_a e_2 &
+					D_a (e^*) = (D_a e)e^*\\
+					D_a (e_1 e_2) = (D_a e_1)e_2 + \delta(e_1)(D_a e_2) & \\ \hline
+					\delta(\emptyset) = \emptyset & \delta(\epsilon) = \epsilon\\
+					\delta(a) = \emptyset & \delta(e_1 e_2) = \delta(e_1)\delta(e_2)\\
+					\delta(e_1 + e_2) = \delta(e_1) + \delta(e_2) & \delta(e^*) = \epsilon
+					\end{array}$$`
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Example: `$e_0 = a(a+b)^*$`
+					
+					`$\begin{array}{rcl}
+					D_a e_0 & = & (D_a a)(a+b)^* + \delta(a)(D_a (a+b)^*)\\
+									& = & \epsilon(a+b)^* + \emptyset\\
+									& = & (a+b)^* \quad = e_1\\
+					D_b e_0 & = & \emptyset\\
+					D_a e_1 & = & (D_a (a+b))(a+b)^*\\
+									& = & e_1\\
+					D_b e_1 & = & e_1
+					\end{array}$`
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Example Continued
+
+					`$e_0 = a(a+b)^*$` and `$e_1 = (a+b)^*$`
 						
-						`$\begin{array}{rcl}
-						D_a e_0 & = & (D_a a)(a+b)^* + \delta(a)(D_a (a+b)^*)\\
-										& = & \epsilon(a+b)^* + \emptyset\\
-										& = & (a+b)^* \quad = e_1\\
-						D_b e_0 & = & \emptyset\\
-						D_a e_1 & = & (D_a (a+b))(a+b)^*\\
-										& = & e_1\\
-						D_b e_1 & = & e_1
-						\end{array}$`
-						</textarea>
-					</section>
-					<section data-markdown>
-							<textarea data-template>
-							## Example Continued
+					<img src="statemachine.png">
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Context-Free Grammars
 
-							`$e_0 = a(a+b)^*$` and `$e_1 = (a+b)^*$`
-							
-							<img src="statemachine.png">
-							</textarea>
-						</section>
-					</div>
+					Reg. Exprs. plus mutually-recursive definitions:
+					`$$\begin{array}{rcl}
+					E & = & E\ \texttt{addOp}\ T + T\\
+					T & = & T\ \texttt{mulOp}\ F + F\\
+					F & = & \textit{Id} + \textit{Num} + \texttt{'('}\ E\ \texttt{')'}\\
+					\textit{Id} & = & \texttt{letter}\ \textit{IdRest}\\
+					\textit{IdRest} & = & (\texttt{letter} + \texttt{digit})\ \textit{IdRest} + \epsilon\\
+					\textit{Num} & = & \textit{Num}\ \texttt{digit} + \texttt{digit}
+					\end{array}$$`
+					(Don't even need Kleene star...)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Derivative Parsing (Might 2011)
+
+					Definition of `$D_a$` is the same, plus "implicit differentiation":
+					`$$\begin{array}{rcl}
+					E & = & E\ \texttt{addOp}\ T + T\\
+					D_a E & = & (D_a E)\ \texttt{addOp}\ T + D_a T
+					\end{array}$$`
+					Expand as needed, "stacking up" remaining obligations in the state
+
+					Only trick is avoiding non-termination: laziness and memoization
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					## Types and Zippers
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+					##
+					</textarea>
+				</section>
+			</div>
 		</div>
 
 		<script src="js/reveal.js"></script>
