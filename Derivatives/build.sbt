@@ -9,5 +9,10 @@ lazy val root = (project in file(".")).
     )),
     name := "Derivatives",
     libraryDependencies += scalaTest % Test,
-    libraryDependencies += scalaCheck % Test
+    libraryDependencies += scalaCheck % Test,
+
+    autoCompilerPlugins := true,
+    addCompilerPlugin(continuationsPlugin),
+    libraryDependencies += continuationsLibrary,
+    scalacOptions += "-P:continuations:enable"
   )
